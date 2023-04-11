@@ -13,11 +13,11 @@ const GET_POKEMONS = graphql(`
   }
 `);
 
-export const getAllPokemons = async () => {
+export const getAllPokemons = async (page: number) => {
   return await client.query({
     query: GET_POKEMONS,
     variables: {
-      perpage: 20,
+      perpage: 20 * page,
     },
   });
 };
