@@ -1,11 +1,10 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import { getAllPokemons } from "@/graphql/queries";
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
+import Head from "next/head";
 
-const inter = Inter({ subsets: ['latin'] })
-
-export default function Home() {
+const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  data,
+}) => {
   return (
     <>
       <Head>
@@ -14,101 +13,62 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+      <main>{JSON.stringify(data)}</main>
     </>
-  )
-}
+  );
+};
+
+export default Home;
+
+export const getStaticProps: GetStaticProps<
+  ApiResponse.Get<typeof getAllPokemons, "data">
+> = async () => {
+  try {
+    const { data } = await getAllPokemons();
+    return {
+      props: { data },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
+};
+
+/*objective is to develop a web application for a simple Pokemon catalog using Next.js, React, GraphQL, and Apollo GraphQL.
+
+Below are the detailed requirements for the assignment:
+
+Requirements:
+Use Next.js with React for the project.
+Utilize the 'pages' directory for the project structure.
+Retrieve data from the GraphQL API: https://graphql-pokemon2.vercel.app/.
+API documentation: https://wayfair.github.io/dociql/.
+Use Apollo Client library to fetch data from the API.
+Host the application on Vercel (free hosting).
+Features:
+
+Homepage:
+List all available Pokemon with pagination (20 Pokemon per page).
+Display each Pokemon's image, number, name, and types.
+Refer to https://www.pokemon.com/us/pokedex/ for layout inspiration.
+Statically render the first three paginated pages at build time.
+Render the remaining pages in real-time.
+Pokemon detail page:
+Display name, image, height, weight, classification, type, weakness, and resistance of the Pokemon.
+Include a button to open a popup showing the Pokemon's evolutions.
+Query evolution data only when the button is clicked, not beforehand.
+Refer to https://www.pokemon.com/us/pokedex/bulbasaur for an example of a Pokemon detail page.
+Statically render the detail pages for the first 20 Pokemon at build time.
+
+Submission:
+Provide a link to the deployed Vercel application.
+Upload the code to a public GitHub repository and share the link.
+
+Please complete this assignment and submit your work within one week from the date of this email, but remember that earlier submissions are highly appreciated. Your submission will help us assess your skills and suitability for the Front-End Developer role at Buyceps.
+
+ */
+
+// APOLLO_KEY=service:poke-test:••••••••••••••••••••••
+// APOLLO_GRAPH_REF=poke-test@current
+// APOLLO_SCHEMA_REPORTING=true
