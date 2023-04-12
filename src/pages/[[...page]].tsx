@@ -1,5 +1,6 @@
 import { Page } from "@/components/utils";
 import { getAllPokemons } from "@/graphql/queries";
+import { MAX_STATICALLY_GENERATED_PAGES, pathGenerator } from "@/utils";
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -9,47 +10,54 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const MAX_STATICALLY_GENERATED_PAGES = 3;
+interface StaticProps {
+  pokemons: Awaited<ReturnType<typeof getAllPokemons>>["data"]["pokemons"];
+}
 
-const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
-  props
-) => {
+const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  pokemons,
+}) => {
   const router = useRouter();
 
   if (router.isFallback) return <div>Loading...</div>;
 
   return (
     <Page>
-      {new Array(MAX_STATICALLY_GENERATED_PAGES + 2)
-        .fill(true)
-        .map((_, index) => (
-          <Link href={`/${index + 1}`} key={index}>
-            {index + 1}
+      <div>
+        {pokemons?.map((pokemon) => (
+          <Link
+            href={`/details/${`${pokemon?.id}&name=${pokemon?.name}`}`}
+            key={pokemon?.id}
+          >
+            {pokemon?.name}
           </Link>
         ))}
-      <div>{JSON.stringify(props)}</div>
+      </div>
     </Page>
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async (context) => {
-  const { data } = await getAllPokemons(MAX_STATICALLY_GENERATED_PAGES);
+export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: new Array(3)
-      .fill(true)
-      .map((_, index) => ({ params: { page: [(index + 1).toString()] } })),
+    paths: pathGenerator(
+      MAX_STATICALLY_GENERATED_PAGES + 1,
+      "page",
+      (_, index) => (index > 0 ? [index.toString()] : [])
+    ),
     fallback: true,
   };
 };
 
-export const getStaticProps: GetStaticProps<
-  ApiResponse.Get<typeof getAllPokemons, "data">
-> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<StaticProps> = async ({
+  params,
+}) => {
   const [pageParam] = (params?.page || ["1"]) as string[];
   try {
     const { data } = await getAllPokemons(+pageParam);
+    const page = +pageParam;
     return {
-      props: { data },
+      props: { pokemons: data.pokemons?.slice(page - 1 * 20, page * 20) },
+      revalidate: 60,
     };
   } catch (error) {
     return {
