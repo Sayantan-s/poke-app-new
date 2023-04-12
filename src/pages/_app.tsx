@@ -1,3 +1,4 @@
+import { withLayout } from "@/components/layouts";
 import client from "@/graphql/client";
 import "@/styles/globals.css";
 import { ApolloProvider } from "@apollo/client";
@@ -8,7 +9,7 @@ import { Fragment } from "react";
 
 const font = Inter({ subsets: ["latin"] });
 
-export default function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   return (
     <Fragment>
       <style jsx global>
@@ -18,12 +19,15 @@ export default function App({ Component, pageProps }: AppProps) {
           }
         `}
       </style>
+
       <ApolloProvider client={client}>
         <Component {...pageProps} />
       </ApolloProvider>
     </Fragment>
   );
-}
+};
+
+export default withLayout(App);
 
 export const config: PageConfig = {
   runtime: "experimental-edge",
