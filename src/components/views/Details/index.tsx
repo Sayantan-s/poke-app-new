@@ -10,8 +10,6 @@ export const DetailsView: FC<DetailPageProps> = ({ pokemon }) => {
   const router = useRouter();
   const [show, setShow] = useState(false);
 
-  const { image, id, name, ...rest } = pokemon!;
-
   const handleShow = useCallback(async () => {
     setShow(true);
   }, []);
@@ -22,14 +20,12 @@ export const DetailsView: FC<DetailPageProps> = ({ pokemon }) => {
 
   return (
     <Page {...title} className="h-full w-full relative px-4">
-      <div className="absolute w-full transform -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 p-4 rounded-lg overflow-hidden">
-        <h1 className="text-4xl font-semibold text-center mb-3 lg:mb-10">
-          {pokemon?.name}
-        </h1>{" "}
+      <div className="absolute w-full transform -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 p-4 rounded-lg overflow-auto">
+        <h1 className="text-4xl font-semibold text-center">{pokemon?.name}</h1>{" "}
         {/* Not included the pokemon number as it is not mentioned in the requirements */}
         <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-4 space-y-4 lg:space-y-0 p-4 rounded-lg w-full">
           <PokemonImage image={pokemon?.image} id={pokemon?.id!} />
-          <PokemonContent {...rest} onRevolution={handleShow} />
+          <PokemonContent {...pokemon} onRevolution={handleShow} />
         </div>
       </div>
       <PokemonEvolutionModal
