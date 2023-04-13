@@ -26,7 +26,7 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({
     <Portal selector=".modals">
       {show ? (
         <dialog
-          className={`relative z-40 p-6 backdrop:backdrop-blur-xl rounded-xl shadow-stone-950/20 backdrop:bg-stone-950/50 aspect-video flex justify-center items-center flex-col ${className}`}
+          className={`relative z-40 p-6 backdrop:backdrop-blur-xl rounded-xl shadow-stone-950/20 backdrop:bg-stone-950/50 aspect-video flex-col ${className}`}
           ref={ref}
         >
           <button

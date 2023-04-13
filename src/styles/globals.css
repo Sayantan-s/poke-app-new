@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html {
-  @apply text-sm font-sans;
+  @apply text-sm font-sans text-stone-400;
 }
 
 .modals {

@@ -19,6 +19,7 @@ export const GET_POKEMON_BY_ID = graphql(`
       name
       types
       image
+      number
       weight {
         minimum
         maximum

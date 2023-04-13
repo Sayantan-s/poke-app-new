@@ -29,7 +29,9 @@ export const PokemonCard: FC<NonNullable<PokemonsQuery["pokemons"]>[number]> = (
           <h1 className="font-semibold text-stone-500/80">
             #{pokemon?.number}
           </h1>
-          <p className="font-medium text-xl mt-3">{pokemon?.name}</p>
+          <p className="font-medium text-xl mt-3 text-stone-800">
+            {pokemon?.name}
+          </p>
         </div>
         <div className="mt-1.5 space-x-2">
           {pokemon?.types?.map((type) => (

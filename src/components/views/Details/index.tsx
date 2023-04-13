@@ -33,8 +33,11 @@ export const DetailsView: FC<DetailPageProps> = ({ pokemon }) => {
         </div>
       </div>
       <PokemonEvolutionModal
-        pokemonId={pokemon?.id!}
+        types={pokemon?.types!}
+        id={pokemon?.id!}
         name={pokemon?.name!}
+        number={pokemon?.number!}
+        image={pokemon?.image!}
         show={show}
         onHide={() => {
           setShow(false);
