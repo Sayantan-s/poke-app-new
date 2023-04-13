@@ -6,6 +6,13 @@ html {
   @apply text-sm font-sans text-stone-400;
 }
 
+body {
+  @apply w-full;
+}
+
 .modals {
   @apply h-full w-screen fixed;
+}
+
+@media screen {
 }

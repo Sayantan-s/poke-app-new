@@ -1,3 +1,4 @@
+import { Tags } from "@/components/organisms/TagGroup";
 import { PokemonsQuery } from "@/graphql/__generated__/graphql";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,16 +34,16 @@ export const PokemonCard: FC<NonNullable<PokemonsQuery["pokemons"]>[number]> = (
             {pokemon?.name}
           </p>
         </div>
-        <div className="mt-1.5 space-x-2">
-          {pokemon?.types?.map((type) => (
-            <div
-              className="inline-block bg-emerald-100 border border-emerald-200 text-emerald-600 px-3 py-1 rounded-md text-xs"
+        <Tags tagsData={pokemon?.types!} className="mt-1.5 space-x-2">
+          {(type) => (
+            <Tags.Tag
+              className="bg-emerald-100 border border-emerald-200 text-emerald-600 px-3 py-1 rounded-md text-xs"
               key={type}
             >
               {type}
-            </div>
-          ))}
-        </div>
+            </Tags.Tag>
+          )}
+        </Tags>
       </div>
     </div>
   );

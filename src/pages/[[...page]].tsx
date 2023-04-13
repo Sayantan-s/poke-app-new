@@ -32,7 +32,7 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async ({
     const { data } = await getAllPokemons(+pageParam);
     const page = +pageParam;
     return {
-      props: { pokemons: data.pokemons },
+      props: { pokemons: data.pokemons?.slice((page - 1) * 20, page * 20 + 1) },
       revalidate: 60,
     };
   } catch (error) {

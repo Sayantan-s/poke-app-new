@@ -1,4 +1,5 @@
 import { Modal } from "@/components/organisms";
+import { Tags } from "@/components/organisms/TagGroup";
 import { Loader } from "@/components/utils";
 import { Pokemon } from "@/graphql/__generated__/graphql";
 import { GET_POKEMON_EVOLUTIONS } from "@/graphql/schema";
@@ -53,10 +54,10 @@ const PokemonEvolutionModal: FC<Props> = ({ show, onHide, ...pokeFields }) => {
                         </div>
                       ) : null}
                       <div className="text-center">
-                        <div className="bg-stone-50 rounded-full p-4 shadow-md">
-                          <div className="relative w-40 aspect-square bg-white rounded-full overflow-hidden">
+                        <div className="bg-stone-50 w-48 rounded-full p-4 shadow-md">
+                          <div className="relative aspect-square bg-white rounded-full overflow-hidden">
                             <Image
-                              className="object-contain w-full h-full"
+                              className="object-contain"
                               alt={`pokemon_${pokemon?.id}`}
                               fill
                               sizes="100vw"
@@ -71,16 +72,19 @@ const PokemonEvolutionModal: FC<Props> = ({ show, onHide, ...pokeFields }) => {
                           <p className="font-semibold text-stone-500/80 mt-2">
                             #{pokemon?.number}
                           </p>{" "}
-                          <div className="flex flex-wrap justify-center gap-2 mt-3">
-                            {pokemon?.types?.map((type) => (
-                              <div
+                          <Tags
+                            tagsData={pokemon?.types!}
+                            className="justify-center gap-2 mt-3"
+                          >
+                            {(type) => (
+                              <Tags.Tag
                                 key={type}
-                                className="bg-emerald-50 hover:bg-emerald-100/80 px-2 py-1 rounded-2xl text-xs text-emerald-500 border border-emerald-300 space-x-1 text-center"
+                                className="bg-emerald-50 hover:bg-emerald-100/80 px-2 py-1 rounded-2xl text-xs text-emerald-500 border border-emerald-300"
                               >
                                 {type}
-                              </div>
-                            ))}
-                          </div>
+                              </Tags.Tag>
+                            )}
+                          </Tags>
                         </div>
                       </div>
                     </Fragment>
