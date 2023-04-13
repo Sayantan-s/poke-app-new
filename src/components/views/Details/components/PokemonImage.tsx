@@ -6,7 +6,7 @@ type Props = Pick<Pokemon, "id" | "image">;
 
 export const PokemonImage: FC<Props> = memo((pokemon) => {
   return (
-    <div className="w-full aspect-square flex-1 bg-stone-50 p-4 rounded-xl">
+    <div className="w-full aspect-video lg:aspect-square flex-1 bg-stone-50 p-4 rounded-xl">
       <div className="relative w-full h-full bg-white rounded-xl">
         <Image
           className="object-contain"

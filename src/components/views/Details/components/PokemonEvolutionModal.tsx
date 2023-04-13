@@ -19,19 +19,23 @@ const PokemonEvolutionModal: FC<Props> = ({ show, onHide, ...pokeFields }) => {
   });
 
   return (
-    <Modal className="w-full max-w-xl sm:max-w-3xl" show={show} onHide={onHide}>
+    <Modal
+      className="w-full max-w-sm sm:max-w-xl md:max-w-3xl max-h-[500px] aspect-[1/4] md:aspect-video"
+      show={show}
+      onHide={onHide}
+    >
       {loading ? (
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <Loader />
         </div>
       ) : (
         <figure className="h-full">
-          <figcaption className="text-lg text-stone-700 font-semibold">
+          <figcaption className="text-xl text-stone-700 font-semibold py-3 text-center">
             Evolutions
           </figcaption>
           <div className="overflow-x-auto pb-6 pt-1 h-full">
             {data?.pokemon?.evolutions ? (
-              <div className="flex items-center gap-3 h-full">
+              <div className="flex flex-col md:flex-row items-center gap-3 h-full py-4">
                 {[pokeFields, ...data.pokemon.evolutions].map(
                   (pokemon, index) => (
                     <Fragment key={pokemon?.id}>
@@ -43,7 +47,7 @@ const PokemonEvolutionModal: FC<Props> = ({ show, onHide, ...pokeFields }) => {
                             viewBox="0 0 24 24"
                             strokeWidth={1.5}
                             stroke="currentColor"
-                            className="w-10 h-10 text-stone-400 stroke-2"
+                            className="w-10 h-10 text-stone-400 stroke-2 transform rotate-90 sm:rotate-0"
                           >
                             <path
                               strokeLinecap="round"
@@ -54,7 +58,7 @@ const PokemonEvolutionModal: FC<Props> = ({ show, onHide, ...pokeFields }) => {
                         </div>
                       ) : null}
                       <div className="text-center">
-                        <div className="bg-stone-50 w-48 rounded-full p-4 shadow-md">
+                        <div className="bg-stone-50 mx-auto w-32 md:w-48 rounded-full p-4 shadow-md">
                           <div className="relative aspect-square bg-white rounded-full overflow-hidden">
                             <Image
                               className="object-contain"

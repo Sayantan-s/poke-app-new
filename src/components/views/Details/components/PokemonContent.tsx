@@ -1,5 +1,6 @@
 import { Tags } from "@/components/organisms/TagGroup";
 import { Pokemon } from "@/graphql/__generated__/graphql";
+import { useRouter } from "next/router";
 import { FC, MouseEventHandler, memo } from "react";
 
 interface Props
@@ -17,9 +18,35 @@ interface Props
 
 export const PokemonContent: FC<Props> = memo(
   ({ onRevolution, ...pokemon }) => {
+    const router = useRouter();
+
+    const goBack = () => {
+      router.replace("/");
+    };
+
     return (
       <div className="flex-1 sm:flex-auto lg:flex-1 space-y-3">
-        <div className="flex justify-end">
+        <div className="flex justify-between items-center gap-3">
+          <button
+            className="h-full aspect-square rounded-full"
+            title="go to home page"
+            onClick={goBack}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 text-indigo-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
+            </svg>
+          </button>
           <button
             onClick={onRevolution}
             className="border w-full sm:w-auto border-rose-600 bg-gradient-to-t from-rose-600/70 via-rose-500 to-rose-600/80 transi text-rose-50 px-3 py-1.5 rounded-md transition-transform active:scale-95"
