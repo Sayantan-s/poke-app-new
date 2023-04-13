@@ -36,6 +36,7 @@ export const getStaticProps: GetStaticProps<DetailPageProps> = async ({
   try {
     const [id, name] = (params?.pokemon as string).split("&name=");
     const { data } = await getPokemonById(id, name);
+    if (!data.pokemon) throw new Error("Pokemon not found!");
     return {
       props: { pokemon: data.pokemon },
       revalidate: 60,

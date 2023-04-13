@@ -31,8 +31,10 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async ({
   try {
     const { data } = await getAllPokemons(+pageParam);
     const page = +pageParam;
+    const paginatedData = data.pokemons?.slice((page - 1) * 20, page * 20 + 1);
+    if (!paginatedData?.length) throw "Finished pages!";
     return {
-      props: { pokemons: data.pokemons?.slice((page - 1) * 20, page * 20 + 1) },
+      props: { pokemons: paginatedData },
       revalidate: 60,
     };
   } catch (error) {
