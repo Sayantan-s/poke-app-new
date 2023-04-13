@@ -12,7 +12,7 @@
     "prebuild": "yarn generate"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.11",
+    "@apollo/client": "^3.7.12",
     "@types/node": "18.15.11",
     "@types/react": "18.0.34",
     "@types/react-dom": "18.0.11",

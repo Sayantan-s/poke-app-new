@@ -1,11 +1,11 @@
-import { GetAllPokemonsQuery } from "@/graphql/__generated__/graphql";
+import { PokemonsQuery } from "@/graphql/__generated__/graphql";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 
-export const PokemonCard: FC<
-  NonNullable<GetAllPokemonsQuery["pokemons"]>[number]
-> = (pokemon) => {
+export const PokemonCard: FC<NonNullable<PokemonsQuery["pokemons"]>[number]> = (
+  pokemon
+) => {
   return (
     <div className="bg-stone-50 rounded-lg p-3 border border-stone-200/80 hover:bg-slate-100/70">
       <div className="w-full aspect-square">

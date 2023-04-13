@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 html {
-  @apply text-sm;
+  @apply text-sm font-sans;
+}
+
+.modals {
+  @apply h-full w-screen fixed;
 }
