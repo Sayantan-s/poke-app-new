@@ -1,7 +1,11 @@
 import { HomePageProps } from "@/components/utils/types";
 import { HomeView } from "@/components/views";
 import { getAllPokemons } from "@/graphql/queries";
-import { MAX_STATICALLY_GENERATED_PAGES, pathGenerator } from "@/utils";
+import {
+  MAX_STATICALLY_GENERATED_PAGES,
+  POKEMONS_PER_PAGE,
+  pathGenerator,
+} from "@/utils";
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -31,7 +35,10 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async ({
   try {
     const { data } = await getAllPokemons(+pageParam);
     const page = +pageParam;
-    const paginatedData = data.pokemons?.slice((page - 1) * 20, page * 20 + 1);
+    const paginatedData = data.pokemons?.slice(
+      (page - 1) * POKEMONS_PER_PAGE,
+      page * POKEMONS_PER_PAGE + 1
+    );
     if (!paginatedData?.length) throw "Finished pages!";
     return {
       props: { pokemons: paginatedData },

@@ -10,8 +10,8 @@ export const HomeView: FC<HomePageProps> = ({ pokemons }) => {
   if (router.isFallback) return <div>Loading...</div>;
 
   return (
-    <Page className="flex items-center justify-center w-full h-screen rounded-2xl py-2">
-      <div className="grid px-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full h-full md:h-[600px] overflow-scroll">
+    <Page className="flex items-center justify-center w-full h-screen rounded-2xl py-8">
+      <div className="grid px-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full h-full overflow-scroll">
         {pokemons?.map((pokemon) => (
           <PokemonCard {...pokemon} id={pokemon?.id!} key={pokemon?.id!} />
         ))}
