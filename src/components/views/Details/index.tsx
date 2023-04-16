@@ -10,9 +10,13 @@ export const DetailsView: FC<DetailPageProps> = ({ pokemon }) => {
   const router = useRouter();
   const [show, setShow] = useState(false);
 
-  const handleShow = useCallback(async () => {
+  const handleShow = useCallback(() => {
     setShow(true);
   }, []);
+
+  const handleHide = () => {
+    setShow(false);
+  };
 
   const title = pokemon?.name ? { title: pokemon.name.toLowerCase() } : {};
 
@@ -37,9 +41,7 @@ export const DetailsView: FC<DetailPageProps> = ({ pokemon }) => {
         number={pokemon?.number!}
         image={pokemon?.image!}
         show={show}
-        onHide={() => {
-          setShow(false);
-        }}
+        onHide={handleHide}
       />
     </Page>
   );
